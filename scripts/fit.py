@@ -17,7 +17,7 @@ def fit_model():
     
     # реализуйте основную логику шага с использованием гиперпараметров
     cat_features = data.select_dtypes(include='object')
-    num_features = data.select_dtypes(['float'])
+    num_features = data.select_dtypes(['float64', 'int64'])
     
     preprocessor = ColumnTransformer(
         [
