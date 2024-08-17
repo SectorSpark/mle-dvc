@@ -15,7 +15,7 @@ def fit_model():
         params = yaml.safe_load(fd)
     
     data = pd.read_csv('data/initial_data.csv')
-    # обучение модели
+
     cat_features = data.select_dtypes(include='object')
     potential_binary_features = cat_features.nunique() == 2
 
@@ -35,16 +35,15 @@ def fit_model():
 
     model = LogisticRegression(C=params['C'], penalty=params['penalty'], max_iter=1000)
 
-
     pipeline = Pipeline(
         [
             ('preprocessor', preprocessor),
             ('model', model)
         ]
     )
+    
     pipeline.fit(data, data['target'])
-    feature_names = pipeline.named_steps['preprocessor'].get_feature_names_out()
-    print(feature_names)
+
     os.makedirs('models', exist_ok=True)
     joblib.dump(pipeline, 'models/fitted_model.pkl')
 
